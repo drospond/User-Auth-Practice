@@ -4,7 +4,7 @@ class CreateAccount extends Component {
     render() {
         return (
             <div className="container">
-                <h1>Sign In</h1>
+                <h1>Create Account</h1>
                 <form>
                     <div className="form-group">
                         <label for="exampleInputEmail1">Email address</label>

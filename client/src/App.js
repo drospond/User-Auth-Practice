@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import axios from "axios";
-import Navbar from "./Components/Navbar/Navbar"
+import Navbar from "./Components/Navbar/Navbar";
 import SignIn from "./Containers/SignIn/SignIn";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import CreateAccount from "./Containers/CreateAccount/CreateAccount";
 
 function App() {
   useEffect(() => {
@@ -17,8 +19,17 @@ function App() {
   }, []);
   return (
     <>
-      <Navbar/>
-      <SignIn/>
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route exact path="/">
+            <SignIn/>
+          </Route>
+          <Route  path="/create-account">
+            <CreateAccount/>
+          </Route>
+        </Switch>
+      </Router>
     </>
   );
 }
