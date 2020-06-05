@@ -34,7 +34,7 @@ class SignIn extends Component {
         <h1>Sign In</h1>
         <form onSubmit={(event)=>this.signIn(event, this.state.email, this.state.password)}>
           <div className="form-group">
-            <label for="email">Email address</label>
+            <label htmlFor="email">Email address</label>
             <input
               type="email"
               className="form-control"
@@ -48,7 +48,7 @@ class SignIn extends Component {
             </small>
           </div>
           <div className="form-group">
-            <label for="exampleInputPassword1">Password</label>
+            <label htmlFor="exampleInputPassword1">Password</label>
             <input
               type="password"
               className="form-control"

@@ -33,7 +33,7 @@ class CreateAccount extends Component {
         <h1>Create Account</h1>
         <form onSubmit={(event)=>this.createAccount(event, this.state.email,this.state.username, this.state.password)}>
           <div className="form-group">
-            <label for="exampleInputEmail1">Email address</label>
+            <label htmlFor="exampleInputEmail1">Email address</label>
             <input
               type="email"
               name="email"
@@ -46,11 +46,11 @@ class CreateAccount extends Component {
             </small>
           </div>
           <div className="form-group">
-            <label for="exampleInputEmail1">Username</label>
+            <label htmlFor="exampleInputEmail1">Username</label>
             <input type="text" className="form-control" name="username" onChange={this.handleInputChange}/>
           </div>
           <div className="form-group">
-            <label for="inputPassword1">Password</label>
+            <label htmlFor="inputPassword1">Password</label>
             <input
               type="password"
               className="form-control"
@@ -60,7 +60,7 @@ class CreateAccount extends Component {
             />
           </div>
           <div className="form-group">
-            <label for="inputPassword2">Repeat Password</label>
+            <label htmlFor="inputPassword2">Repeat Password</label>
             <input
               type="password"
               className="form-control"
