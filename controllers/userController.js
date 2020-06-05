@@ -28,11 +28,11 @@ router.post("/signin", (req, res) => {
     where: {
       email: email
     }
-  }).then((user)=>{
+  }).then(async (user)=>{
     if(!user){
       return res.status(500).json({succes: false});
     }
-    if(user.password === password){
+    if( await bcrypt.compare(password, user.password)){
       res.json({succes: true});
     }else{
       res.json({succes:false});
