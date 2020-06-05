@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 class CreateAccount extends Component {
   state = {
@@ -17,11 +18,20 @@ class CreateAccount extends Component {
     });
   };
 
+  createAccount = (event, email, username, password)=>{
+      event.preventDefault();
+      axios.post("/api/user", {email, username, password}).then(res=>{
+          console.log(res.data);
+          }).catch(er=>{
+            console.log(er);
+      })
+  }
+
   render() {
     return (
       <div className="container">
         <h1>Create Account</h1>
-        <form>
+        <form onSubmit={(event)=>this.createAccount(event, this.state.email,this.state.username, this.state.password)}>
           <div className="form-group">
             <label for="exampleInputEmail1">Email address</label>
             <input
@@ -37,7 +47,7 @@ class CreateAccount extends Component {
           </div>
           <div className="form-group">
             <label for="exampleInputEmail1">Username</label>
-            <input type="email" className="form-control" name="username" onChange={this.handleInputChange}/>
+            <input type="text" className="form-control" name="username" onChange={this.handleInputChange}/>
           </div>
           <div className="form-group">
             <label for="inputPassword1">Password</label>
