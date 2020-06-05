@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import axios from "axios";
+import axios from "axios";
 import { Link } from "react-router-dom";
 
 
@@ -19,11 +19,20 @@ class SignIn extends Component {
     })
   }
 
+  signIn = (event, email, password) =>{
+    event.preventDefault();
+    axios.post("api/user/signin", {email, password}).then(res=>{
+      console.log(res.data);
+    }).catch(er=>{
+      console.log(er);
+    })
+  }
+
   render() {
     return (
       <div className="container">
         <h1>Sign In</h1>
-        <form>
+        <form onSubmit={(event)=>this.signIn(event, this.state.email, this.state.password)}>
           <div className="form-group">
             <label for="email">Email address</label>
             <input
