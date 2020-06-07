@@ -5,6 +5,18 @@ const db = require("../models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+function authenticateToken(req, res, next){
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if(token === null) return res.sendStatus(401);
+
+  jwt.verify(token, process.env.REACT_APP_SECRET_KEY, (err, user) => {
+    if(err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  })
+}
+
 router.post("/", async (req, res) => {
   try{
     const email = req.body.email.trim();
@@ -22,7 +34,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.post("/signin", (req, res) => {
+router.post("/signin", authenticateToken, (req, res) => {
   const email = req.body.email.trim();
   const password = req.body.password;
 
