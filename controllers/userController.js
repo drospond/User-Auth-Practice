@@ -1,7 +1,9 @@
+require('dotenv').config();
 const express = require("express");
 const router = express.Router();
 const db = require("../models");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 router.post("/", async (req, res) => {
   try{
@@ -33,7 +35,9 @@ router.post("/signin", (req, res) => {
       return res.status(500).json({succes: false});
     }
     if( await bcrypt.compare(password, user.password)){
-      res.json({succes: true});
+      const userJWT = {id: user.id, username: user.username};
+      const accessToken = jwt.sign(userJWT, process.env.REACT_APP_SECRET_KEY);
+      res.json({accessToken: accessToken, succes: true});
     }else{
       res.json({succes:false});
     }
