@@ -5,6 +5,7 @@ import Navbar from "./Components/Navbar/Navbar";
 import SignIn from "./Containers/SignIn/SignIn";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CreateAccount from "./Containers/CreateAccount/CreateAccount";
+import Dashboard from "./Containers/Dashboard/Dashboard";
 
 function App() {
   useEffect(() => {
@@ -27,6 +28,9 @@ function App() {
           </Route>
           <Route  path="/create-account">
             <CreateAccount/>
+          </Route>
+          <Route  path="/dashboard">
+            <Dashboard/>
           </Route>
         </Switch>
       </Router>
