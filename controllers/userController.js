@@ -17,6 +17,17 @@ function authenticateToken(req, res, next){
   })
 }
 
+router.get("/", authenticateToken, (req, res) => {
+  db.User.findOne({
+    where: {
+      id: req.user.id
+    },
+    attributes: ["id", "username", "email"]
+  }).then(user=>{
+    res.json(user);
+  })
+})
+
 router.post("/", async (req, res) => {
   try{
     const email = req.body.email.trim();
@@ -34,7 +45,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.post("/signin", authenticateToken, (req, res) => {
+router.post("/signin", (req, res) => {
   const email = req.body.email.trim();
   const password = req.body.password;
 
