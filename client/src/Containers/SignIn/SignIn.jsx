@@ -23,6 +23,7 @@ class SignIn extends Component {
     event.preventDefault();
     axios.post("api/user/signin", {email, password}).then(res=>{
       console.log(res.data);
+      sessionStorage.setItem("jwt", res.data.accessToken);
     }).catch(er=>{
       console.log(er);
     })
