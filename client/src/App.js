@@ -59,7 +59,7 @@ function App() {
           <Route
             exact
             path="/"
-            render={(props) => <SignIn {...props} signIn={signIn} />}
+            render={(props) => <SignIn {...props} signIn={signIn} getUserObject={getUserObject} setIsLoggedIn={setIsLoggedIn}/>}
           />
           <Route
             path="/create-account"

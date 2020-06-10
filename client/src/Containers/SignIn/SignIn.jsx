@@ -1,33 +1,51 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
-
+import axios from "axios";
 
 class SignIn extends Component {
-  state={
+  state = {
     email: "",
-    password:"",
-    error: ""
-  }
+    password: "",
+    error: false,
+  };
 
-  handleInputChange =(event) =>{
-    const {name, value} = event.target;
+  handleInputChange = (event) => {
+    const { name, value } = event.target;
     this.setState({
       [name]: value,
-      error: ""
-    })
-  }
+      error: "",
+    });
+  };
 
-  signIn = async (event, email, password)=>{
-    await this.props.signIn(event, email, password);
-    await this.props.history.push('/dashboard');
-  }
+  signIn = (event, email, password) => {
+    event.preventDefault();
+    axios
+      .post("api/user/signin", { email, password })
+      .then((res) => {
+        if (res.data.error) {
+          console.log(res.data);
+          return this.setState({ error: res.data.error });
+        }
+        sessionStorage.setItem("jwt", res.data.accessToken);
+        this.props.getUserObject();
+        this.props.setIsLoggedIn(true);
+        this.props.history.push("/dashboard");
+      })
+      .catch((er) => {
+        console.log(er);
+      });
+  };
 
   render() {
     return (
       <div className="container">
         <h1>Sign In</h1>
-        <form onSubmit={(event)=>this.signIn(event, this.state.email, this.state.password)}>
+        {this.state.error && <p>{this.state.error}</p>}
+        <form
+          onSubmit={(event) =>
+            this.signIn(event, this.state.email, this.state.password)
+          }
+        >
           <div className="form-group">
             <label htmlFor="email">Email address</label>
             <input

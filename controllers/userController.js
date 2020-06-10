@@ -54,19 +54,20 @@ router.post("/signin", (req, res) => {
       email: email
     }
   }).then(async (user)=>{
+    const authFail = "Username or password incorrect"
     if(!user){
-      return res.status(500).json({succes: false});
+      return res.json({succes: false, error: authFail}).status(401);
     }
     if( await bcrypt.compare(password, user.password)){
       const userJWT = {id: user.id, username: user.username};
       const accessToken = jwt.sign(userJWT, process.env.REACT_APP_SECRET_KEY, {expiresIn: '1h'});
       res.json({accessToken: accessToken, succes: true});
     }else{
-      res.json({succes:false});
+      res.json({succes:false, error: authFail}).status(401);
     }
   }).catch(er=>{
     console.log(er);
-    res.status(500).json({succes: false});
+    res.json({succes: false, error: 'Something went wrong :/ Try again later.'}).status(500);
   })
 })
 
