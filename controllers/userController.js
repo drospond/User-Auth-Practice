@@ -59,7 +59,7 @@ router.post("/signin", (req, res) => {
     }
     if( await bcrypt.compare(password, user.password)){
       const userJWT = {id: user.id, username: user.username};
-      const accessToken = jwt.sign(userJWT, process.env.REACT_APP_SECRET_KEY);
+      const accessToken = jwt.sign(userJWT, process.env.REACT_APP_SECRET_KEY, {expiresIn: '1h'});
       res.json({accessToken: accessToken, succes: true});
     }else{
       res.json({succes:false});
