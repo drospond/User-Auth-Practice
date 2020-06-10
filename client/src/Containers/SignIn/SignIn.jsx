@@ -24,12 +24,13 @@ class SignIn extends Component {
     axios.post("api/user/signin", {email, password}).then(res=>{
       console.log(res.data);
       sessionStorage.setItem("jwt", res.data.accessToken);
+      this.props.history.push('/dashboard');
     }).catch(er=>{
       console.log(er);
     })
   }
 
-  render() {
+  render(props) {
     return (
       <div className="container">
         <h1>Sign In</h1>

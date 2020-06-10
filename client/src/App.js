@@ -23,12 +23,8 @@ function App() {
       <Router>
         <Navbar />
         <Switch>
-          <Route exact path="/">
-            <SignIn/>
-          </Route>
-          <Route  path="/create-account">
-            <CreateAccount/>
-          </Route>
+          <Route exact path="/" render={(props)=>(<SignIn {...props}/>)}/>
+          <Route  path="/create-account" render={(props)=>(<CreateAccount {...props}/>)}/>
           <Route  path="/dashboard">
             <Dashboard/>
           </Route>
