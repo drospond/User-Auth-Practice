@@ -18,9 +18,9 @@ class SignIn extends Component {
     })
   }
 
-  signIn = (event, email, password)=>{
-    this.props.signIn(event, email, password);
-    this.props.history.push('/dashboard');
+  signIn = async (event, email, password)=>{
+    await this.props.signIn(event, email, password);
+    await this.props.history.push('/dashboard');
   }
 
   render() {

@@ -22,10 +22,10 @@ class CreateAccount extends Component {
     event.preventDefault();
     axios
       .post("/api/user", { email, username, password })
-      .then((res) => {
+      .then(async (res) => {
         console.log(res.data);
-        this.props.signIn(event, email, password);
-        this.props.history.push("/dashboard");
+        await this.props.signIn(event, email, password);
+        await this.props.history.push("/dashboard");
       })
       .catch((er) => {
         console.log(er);
