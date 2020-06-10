@@ -46,10 +46,15 @@ function App() {
       });
   };
 
+  const logOut = () => {
+    sessionStorage.setItem('jwt', '');
+    setIsLoggedIn(false);
+  }
+
   return (
     <>
       <Router>
-        <Navbar isLoggedIn={isLoggedIn}/>
+        <Navbar isLoggedIn={isLoggedIn} logOut={logOut}/>
         <Switch>
           <Route
             exact
