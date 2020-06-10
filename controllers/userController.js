@@ -29,20 +29,31 @@ router.get("/", authenticateToken, (req, res) => {
 })
 
 router.post("/", async (req, res) => {
-  try{
     const email = req.body.email.trim();
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    let hashedPassword;
+    if(!req.body.password.match(/^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{8,}$/)){
+      console.log("PASSWORD ERROR");
+      return res.json({succes:false, error: 'Password needs to contain a number and letter and be at least 8 characters'}).status(400);
+    }else{
+      hashedPassword = await bcrypt.hash(req.body.password, 10);
+    }
     const username = req.body.username.trim();
 
     db.User.create({email, password: hashedPassword, username})
       .then(() => res.status(201).json({ succes: true }))
       .catch((er) => {
         console.log(er);
-        res.status(500).json({succes:false});
+        if(er.errors[0].type==="unique violation" && er.errors[0].path==='users.email'){
+          return res.json({succes:false, error: 'Account with that email already exists'}).status(400);
+        }
+        if(er.errors[0].type==='Validation error' && er.errors[0].path==='email'){
+          return res.json({succes:false, error: 'Enter a valid email'}).status(400);
+        }
+        if(er.errors[0].type==='unique violation' && er.errors[0].path==='users.username'){
+          return res.json({succes:false, error: 'Username already exists'}).status(400);
+        }
+        res.json({succes:false, error: "Server error. Try again Later."}).status(400);
       });
-  } catch{
-    res.status(500).send();
-  }
 });
 
 router.post("/signin", (req, res) => {

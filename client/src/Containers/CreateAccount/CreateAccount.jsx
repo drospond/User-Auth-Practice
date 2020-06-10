@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import './CreateAccount.css';
 
 class CreateAccount extends Component {
   state = {
@@ -14,7 +15,7 @@ class CreateAccount extends Component {
     const { name, value } = event.target;
     this.setState({
       [name]: value,
-      error: "",
+      error: false,
     });
   };
 
@@ -22,10 +23,12 @@ class CreateAccount extends Component {
     event.preventDefault();
     axios
       .post("/api/user", { email, username, password })
-      .then(async (res) => {
-        console.log(res.data);
-        await this.props.signIn(event, email, password);
-        await this.props.history.push("/dashboard");
+      .then((res) => {
+        if(res.data.error){
+          return this.setState({error: res.data.error});
+        }
+        this.props.signIn(event, email, password);
+        this.props.history.push("/dashboard");
       })
       .catch((er) => {
         console.log(er);
@@ -36,6 +39,7 @@ class CreateAccount extends Component {
     return (
       <div className="container">
         <h1>Create Account</h1>
+        {this.state.error && <p className='error'>{this.state.error}</p>}
         <form
           onSubmit={(event) =>
             this.createAccount(
