@@ -18,20 +18,34 @@ class CreateAccount extends Component {
     });
   };
 
-  createAccount = (event, email, username, password)=>{
-      event.preventDefault();
-      axios.post("/api/user", {email, username, password}).then(res=>{
-          console.log(res.data);
-          }).catch(er=>{
-            console.log(er);
+  createAccount = (event, email, username, password) => {
+    event.preventDefault();
+    axios
+      .post("/api/user", { email, username, password })
+      .then((res) => {
+        console.log(res.data);
+        this.props.signIn(event, email, password);
+        this.props.history.push("/dashboard");
       })
-  }
+      .catch((er) => {
+        console.log(er);
+      });
+  };
 
   render() {
     return (
       <div className="container">
         <h1>Create Account</h1>
-        <form onSubmit={(event)=>this.createAccount(event, this.state.email,this.state.username, this.state.password)}>
+        <form
+          onSubmit={(event) =>
+            this.createAccount(
+              event,
+              this.state.email,
+              this.state.username,
+              this.state.password
+            )
+          }
+        >
           <div className="form-group">
             <label htmlFor="exampleInputEmail1">Email address</label>
             <input
@@ -47,7 +61,12 @@ class CreateAccount extends Component {
           </div>
           <div className="form-group">
             <label htmlFor="exampleInputEmail1">Username</label>
-            <input type="text" className="form-control" name="username" onChange={this.handleInputChange}/>
+            <input
+              type="text"
+              className="form-control"
+              name="username"
+              onChange={this.handleInputChange}
+            />
           </div>
           <div className="form-group">
             <label htmlFor="inputPassword1">Password</label>

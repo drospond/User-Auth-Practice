@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 
 
@@ -19,18 +18,12 @@ class SignIn extends Component {
     })
   }
 
-  signIn = (event, email, password) =>{
-    event.preventDefault();
-    axios.post("api/user/signin", {email, password}).then(res=>{
-      console.log(res.data);
-      sessionStorage.setItem("jwt", res.data.accessToken);
-      this.props.history.push('/dashboard');
-    }).catch(er=>{
-      console.log(er);
-    })
+  signIn = (event, email, password)=>{
+    this.props.signIn(event, email, password);
+    this.props.history.push('/dashboard');
   }
 
-  render(props) {
+  render() {
     return (
       <div className="container">
         <h1>Sign In</h1>

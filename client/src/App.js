@@ -18,13 +18,24 @@ function App() {
         console.log(err);
       });
   }, []);
+
+  const signIn = (event, email, password) =>{
+    event.preventDefault();
+    axios.post("api/user/signin", {email, password}).then(res=>{
+      console.log(res.data);
+      sessionStorage.setItem("jwt", res.data.accessToken);
+    }).catch(er=>{
+      console.log(er);
+    })
+  }
+
   return (
     <>
       <Router>
         <Navbar />
         <Switch>
-          <Route exact path="/" render={(props)=>(<SignIn {...props}/>)}/>
-          <Route  path="/create-account" render={(props)=>(<CreateAccount {...props}/>)}/>
+          <Route exact path="/" render={(props)=>(<SignIn {...props} signIn={signIn}/>)}/>
+          <Route  path="/create-account" render={(props)=>(<CreateAccount {...props} signIn={signIn}/>)}/>
           <Route  path="/dashboard">
             <Dashboard/>
           </Route>
