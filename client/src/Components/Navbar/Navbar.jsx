@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Navbar = () => {
+const Navbar = (props) => {
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <h1 className="navbar-brand">User Auth</h1>
@@ -10,7 +10,7 @@ const Navbar = () => {
             <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav">
                     <li className="nav-item active">
-                        <a className="nav-link" href="/">Sign In <span className="sr-only">(current)</span></a>
+                        {!props.isLoggedIn && <a className="nav-link" href="/">Sign In <span className="sr-only">(current)</span></a>}
                     </li>
                 </ul>
             </div>

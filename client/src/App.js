@@ -17,6 +17,7 @@ function App() {
 
   const getUserObject = () => {
     if (!sessionStorage.getItem("jwt")) return;
+    setIsLoggedIn(true);
     const user = sessionStorage.getItem("jwt");
     axios
       .get("/api/user", { headers: { authorization: `Bearer ${user}` } })
@@ -38,6 +39,7 @@ function App() {
         console.log(res.data);
         sessionStorage.setItem("jwt", res.data.accessToken);
         getUserObject();
+        setIsLoggedIn(true);
       })
       .catch((er) => {
         console.log(er);
@@ -47,7 +49,7 @@ function App() {
   return (
     <>
       <Router>
-        <Navbar />
+        <Navbar isLoggedIn={isLoggedIn}/>
         <Switch>
           <Route
             exact
