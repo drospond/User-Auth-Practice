@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import './SignIn.css'
 
 class SignIn extends Component {
   state = {
@@ -40,7 +41,7 @@ class SignIn extends Component {
     return (
       <div className="container">
         <h1>Sign In</h1>
-        {this.state.error && <p>{this.state.error}</p>}
+        {this.state.error && <p className="error">{this.state.error}</p>}
         <form
           onSubmit={(event) =>
             this.signIn(event, this.state.email, this.state.password)
